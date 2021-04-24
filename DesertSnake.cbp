@@ -44,6 +44,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="BaseObj.cpp" />
+		<Unit filename="BaseObj.h" />
 		<Unit filename="Config.h" />
 		<Unit filename="Food.cpp" />
 		<Unit filename="Food.h" />
@@ -53,9 +55,12 @@
 		<Unit filename="Interface.h" />
 		<Unit filename="LTexture.cpp" />
 		<Unit filename="LTexture.h" />
-		<Unit filename="Position.h" />
+		<Unit filename="Menu.cpp" />
+		<Unit filename="Menu.h" />
 		<Unit filename="Snake.cpp" />
 		<Unit filename="Snake.h" />
+		<Unit filename="TextObject.cpp" />
+		<Unit filename="TextObject.h" />
 		<Unit filename="main.cpp" />
 		<Extensions />
 	</Project>

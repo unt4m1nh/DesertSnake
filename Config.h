@@ -9,7 +9,11 @@ enum direction
     right = 1,
 };
 
+
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
+
+const int WALL = 20;
+
 
 #endif // CONFIG_H

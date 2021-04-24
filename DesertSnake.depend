@@ -1,8 +1,10 @@
 # depslib dependency file v1.0
-1615900556 source:c:\users\untaminh\desktop\snakedemo\desertsnake\main.cpp
+1619239864 source:c:\users\untaminh\desktop\snakedemo\desertsnake\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
 	"Game.h"
 
 1608572888 c:\users\untaminh\downloads\sdl2-devel-2.0.14-mingw\sdl2-2.0.14\x86_64-w64-mingw32\include\sdl2\sdl.h
@@ -380,74 +382,158 @@
 	"begin_code.h"
 	"close_code.h"
 
-1616678926 c:\users\untaminh\desktop\snakedemo\desertsnake\game.h
+1619195494 c:\users\untaminh\desktop\snakedemo\desertsnake\game.h
 	<SDL.h>
 	<SDL_image.h>
 	<iostream>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
 	"Interface.h"
 	"Food.h"
 	"Snake.h"
+	"Menu.h"
+	"TextObject.h"
 
-1616571152 source:c:\users\untaminh\desktop\snakedemo\desertsnake\food.cpp
+1618564249 source:c:\users\untaminh\desktop\snakedemo\desertsnake\food.cpp
 	<iostream>
 	<string>
-	<ctime>
-	<cmath>
 	"Food.h"
 
-1616679625 source:c:\users\untaminh\desktop\snakedemo\desertsnake\game.cpp
+1619241279 source:c:\users\untaminh\desktop\snakedemo\desertsnake\game.cpp
 	"Game.h"
 	"Config.h"
 	"Interface.h"
 	"Food.h"
-	<iostream>
-	<SDL.h>
-	<SDL_image.h>
-
-1616678907 c:\users\untaminh\desktop\snakedemo\desertsnake\config.h
-
-1615955673 source:c:\users\untaminh\desktop\snakedemo\desertsnake\ltexture.cpp
-	"LTexture.h"
-	"Interface.h"
-	<iostream>
-
-1615955194 c:\users\untaminh\desktop\snakedemo\desertsnake\ltexture.h
-	<SDL.h>
-	<SDL_image.h>
-	<string>
-
-1616551614 c:\users\untaminh\desktop\snakedemo\desertsnake\interface.h
-	<SDL.h>
-	<SDL_image.h>
-	<string>
-	"LTexture.h"
-
-1616551614 source:c:\users\untaminh\desktop\snakedemo\desertsnake\interface.cpp
-	"Interface.h"
-	<SDL.h>
-	<SDL_image.h>
-	<string>
-
-1616571152 c:\users\untaminh\desktop\snakedemo\desertsnake\food.h
-	<iostream>
-	<SDL.h>
-	<SDL_image.h>
-	<string>
-	"LTexture.h"
-	"Config.h"
-
-1616682484 c:\users\untaminh\desktop\snakedemo\desertsnake\snake.h
-	<SDL.h>
-	<SDL_image.h>
-	<iostream>
-	<vector>
-	<string>
-	"LTexture.h"
-	"Config.h"
-
-1616682196 source:c:\users\untaminh\desktop\snakedemo\desertsnake\snake.cpp
 	"Snake.h"
+	"LTexture.h"
+	"TextObject.h"
+	"BaseObj.h"
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<stdlib.h>
+	<ctime>
+	<string>
+
+1618643338 c:\users\untaminh\desktop\snakedemo\desertsnake\config.h
+
+1618839773 source:c:\users\untaminh\desktop\snakedemo\desertsnake\ltexture.cpp
+	"LTexture.h"
+	"Interface.h"
+	<iostream>
+
+1618550541 c:\users\untaminh\desktop\snakedemo\desertsnake\ltexture.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<string>
+
+1619195544 c:\users\untaminh\desktop\snakedemo\desertsnake\interface.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<string>
+	"LTexture.h"
+	"Snake.h"
+
+1619195494 source:c:\users\untaminh\desktop\snakedemo\desertsnake\interface.cpp
+	"Interface.h"
+	"Config.h"
+	"Game.h"
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+
+1618280269 c:\users\untaminh\desktop\snakedemo\desertsnake\food.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	"LTexture.h"
+	"Config.h"
+	"Position.h"
+
+1618996712 c:\users\untaminh\desktop\snakedemo\desertsnake\snake.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
 	<iostream>
 	<vector>
 	<string>
+	"LTexture.h"
+	"Config.h"
+	"Position.h"
+
+1618999201 source:c:\users\untaminh\desktop\snakedemo\desertsnake\snake.cpp
+	"Snake.h"
+	"Food.h"
+	"Game.h"
+	"LTexture.h"
+	<iostream>
+	<vector>
+	<string>
+
+1618288049 c:\users\untaminh\desktop\snakedemo\desertsnake\position.h
+	<stdexcept>
+
+1618550540 c:\users\untaminh\desktop\snakedemo\desertsnake\menu.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	"LTexture.h"
+
+1618732236 source:c:\users\untaminh\desktop\snakedemo\desertsnake\menu.cpp
+	"Menu.h"
+	"Config.h"
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+
+1547322290 c:\users\untaminh\downloads\sdl2_ttf-devel-2.0.15-mingw\sdl2_ttf-2.0.15\x86_64-w64-mingw32\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1618551162 c:\users\untaminh\desktop\snakedemo\desertsnake\audio.h
+	<iostream>
+	<SDL.h>
+	<SDL_mixer.h>
+	"LTexture.h"
+
+1540998018 c:\users\untaminh\downloads\sdl2_mixer-2.0.4\x86_64-w64-mingw32\include\sdl2\sdl_mixer.h
+	"SDL_stdinc.h"
+	"SDL_rwops.h"
+	"SDL_audio.h"
+	"SDL_endian.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1618634554 source:c:\users\untaminh\desktop\snakedemo\desertsnake\audio.cpp
+	"Audio.h"
+	<iostream>
+	<SDL.h>
+	<SDL_mixer.h>
+
+1619101570 c:\users\untaminh\desktop\snakedemo\desertsnake\textobject.h
+	<iostream>
+	<SDL_ttf.h>
+	"LTexture.h"
+
+1619101056 source:c:\users\untaminh\desktop\snakedemo\desertsnake\textobject.cpp
+	"TextObject.h"
+	<iostream>
+
+1619101056 source:c:\users\untaminh\desktop\snakedemo\desertsnake\baseobj.cpp
+	"BaseObj.h"
+
+1619101164 c:\users\untaminh\desktop\snakedemo\desertsnake\baseobj.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	"LTexture.h"
 

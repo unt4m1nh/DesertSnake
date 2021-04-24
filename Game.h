@@ -4,45 +4,51 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
+#include <SDL_mixer.h>
+#include <SDL_ttf.h>
+
 
 #include "Interface.h"
 #include "Food.h"
 #include "Snake.h"
+#include "Menu.h"
+#include "TextObject.h"
 
 
 class Game{
 
-    /*public:
-        const int width;
-        const int height;
-    */
-
-    //private:
-        //Position foodPosition;
-
-
     public:
-        bool init();
+        bool initGame();
         void close();
         bool run();
+        bool playAgain();
+        bool eatFood();
+        void addFood();
+        bool checkCoordinate();
+        void playMusic(Mix_Music* gMusic);
 
         // init function
         bool initWindowAndRender();
         bool initInterface(SDL_Renderer* &gRenderer);
         bool initFood(SDL_Renderer* &gRenderer);
         bool initSnake(SDL_Renderer* &gRenderer);
+        bool initMenu(SDL_Renderer* &gRenderer);
+
+        Mix_Music* gMusic = NULL;
+        Mix_Chunk* gButton_Click = NULL;
+        Mix_Chunk* gEat_Effect = NULL;
+        Mix_Chunk* gHit_Effect = NULL;
+        TTF_Font* gFont = NULL;
 
 
     private:
-        // window game and renderer to draw
-        // the game's characters, map, etc.
         SDL_Window* gWindow;
         SDL_Renderer* gRenderer;
         Interface* interface;
         Food* food;
         Snake* snake;
-
-        //void addFood();
+        Menu* menu;
+        TextObject* text;
 
 };
 

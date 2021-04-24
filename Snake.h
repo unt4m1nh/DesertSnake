@@ -3,22 +3,16 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include<iostream>
 #include<vector>
 #include<string>
 
 #include "LTexture.h"
 #include "Config.h"
+#include "Position.h"
 
 using namespace std;
-
-struct Point
-{
-    int x0;
-    int y0;
-    int x = 0;
-    int y = 0;
-};
 
 class Snake
 {
@@ -26,35 +20,42 @@ public:
     Snake(SDL_Renderer* &gRenderer);
     ~Snake();
 
-   void setWidth(int w);
-   void setHeight(int h);
-   void set_x(int x);
-   void set_y(int y);
-   int getWidth();
-   int getHeight();
-   int getVelocity();
-   int get_x();
-   int get_y();
+   int getStep();
 
-   void handleEvent(SDL_Event& e);
-   void move();
+   void handleEvent(SDL_Event& e, Mix_Chunk* gButton_Click);
+   void classic();
+   void modern();
+   void growing();
+   bool isHitWall();
+   bool isBiteSelf();
+   void currentPosition();
 
 
-   void renderCurrent(SDL_Renderer* &gRenderer);
+   void renderSnake(SDL_Renderer* &gRenderer);
+   void reDraw(SDL_Renderer* &gRenderer);
    bool loadMedia(SDL_Renderer* &gRenderer);
+   int direction = 1;
+   int score = 0;
+   int angle = 0;
+   vector<Point> snake = {
+                         Point{SCREEN_WIDTH/2, SCREEN_HEIGHT/2},
+                         Point{SCREEN_WIDTH/2, SCREEN_HEIGHT/2},
+                         Point{SCREEN_WIDTH/2, SCREEN_HEIGHT/2},
+                         Point{SCREEN_WIDTH/2, SCREEN_HEIGHT/2}
+                      };
+   Point prevTail;
+   LTexture snakeTexture[100];
+   string snakeTexturePath[2]={"./images/head.png",
+                               "./images/body.png"};
 
-   int direction = 0;
-
-   LTexture snakeTexture[1];
-   string snakeTexturePath[1] = {"./images/head.png"};
 
 
 private:
     int snakeWidth;
     int snakeHeight;
-    const int VELOCITY = 20;
+    const int step = 20;
 
-    Point snake[100];
+
 
 };
 

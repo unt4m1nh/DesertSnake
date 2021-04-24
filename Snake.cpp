@@ -1,82 +1,55 @@
 #include "Snake.h"
+#include "Food.h"
+#include "Game.h"
+#include "LTexture.h"
+
 
 #include<iostream>
 #include<vector>
 #include<string>
+
 
 using namespace std;
 
 Snake::Snake(SDL_Renderer* &gRenderer)
 {
     this->loadMedia(gRenderer);
-    this->setHeight(this->snakeTexture[0].getHeight());
-    this->setWidth(this->snakeTexture[0].getWidth());
-    this->set_x(20);
-    this->set_y(20);
-
 }
 
 Snake::~Snake()
 {
-  for(int i = 0; i < 1; i++)
+  for(size_t i = 0; i < snake.size(); i++)
   {
       this->snakeTexture[i].free();
   }
 }
 
-void Snake::setWidth(int w)
+int Snake::getStep()
 {
-    this->snakeWidth = w;
+    return this->step;
 }
 
-void Snake::setHeight(int h)
-{
-    this->snakeHeight = h;
-}
 
-void Snake::set_x(int x)
-{
-    this->snake[0].x0 = x;
-}
-
-void Snake::set_y(int y)
-{
-    this->snake[0].y0 = y;
-}
-
-int Snake::getWidth()
-{
-    return this->snakeWidth;
-}
-
-int Snake::getHeight()
-{
-    return this->snakeHeight;
-}
-
-int Snake::getVelocity()
-{
-    return this->VELOCITY;
-}
-
-int Snake::get_x()
-{
-    return this->snake[0].x0;
-}
-
-int Snake::get_y()
-{
-    return this->snake[0].y0;
-}
 
 bool Snake::loadMedia(SDL_Renderer* &gRenderer)
 {
     bool success = true;
-    for (int i = 0; i < 1; i++)
+    for (size_t i = 0; i < snake.size(); i++)
     {
-        this->snakeTexture[i].loadFromFile(this->snakeTexturePath[i],gRenderer);
+        if(i==0)
+        {
+             this->snakeTexture[0].loadFromFile(this->snakeTexturePath[i],gRenderer);
+        }
+        else if (i == 1)
+        {
+             this->snakeTexture[1].loadFromFile(this->snakeTexturePath[i],gRenderer);
+        }
+        else
+        {
+             this->snakeTexture[i].loadFromFile(this->snakeTexturePath[(i+1)%i],gRenderer);
+        }
     }
-    for (int i = 0; i < 1; i++) {
+    for (size_t i = 0; i < snake.size(); i++) {
         if (this->snakeTexture[i].get_mTexture() == NULL) {
             success = false;
             printf( "Failed to load texture image %d!\n", i );
@@ -87,53 +60,137 @@ bool Snake::loadMedia(SDL_Renderer* &gRenderer)
     return success;
 }
 
-void Snake::renderCurrent(SDL_Renderer* &gRenderer)
+void Snake::renderSnake(SDL_Renderer* &gRenderer)
 {
-    this->snakeTexture[0].render(gRenderer,this->get_x(),this->get_y());
-    return;
+    //render original snake
+    for (size_t i = 0; i < snake.size(); i++)
+    {
+        this->snakeTexture[i].render(gRenderer,snake[i].x,snake[i].y,NULL,angle);
+    }
+    //redraw it when eating food
+    for (size_t i = 1; i <= snake.size(); i++)
+    {
+        if(i == snake.size())
+        {
+             this->snakeTexture[0].render(gRenderer,snake[snake.size()-i].x,snake[snake.size()-i].y,NULL,angle);
+        }
+        else
+        {
+             this->snakeTexture[1].render(gRenderer,snake[snake.size()-i].x,snake[snake.size()-i].y,NULL,angle);
+        }
+    }
 }
 
-void Snake::handleEvent(SDL_Event& e)
+
+void Snake::handleEvent(SDL_Event& e, Mix_Chunk* gButton_Click)
 {
     if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
      {
-        //Adjust the velocity
-        switch( e.key.keysym.sym )
+        if(e.key.keysym.sym == SDLK_UP && direction != 3)
         {
-            case SDLK_UP: snake[0].y -= VELOCITY; direction = 2; break;
-            case SDLK_DOWN: snake[0].y += VELOCITY; direction = 3; break;
-            case SDLK_LEFT: snake[0].x -= VELOCITY; direction = 0; break;
-            case SDLK_RIGHT: snake[0].x += VELOCITY; direction = 1; break;
+            angle += -90;
+            Mix_PlayChannel(-1,gButton_Click,0);
+            direction = 2;
         }
-    }
-    else if( e.type == SDL_KEYUP && e.key.repeat == 0 )
-    {
-        //Adjust the velocity
-        switch( e.key.keysym.sym )
+        else if(e.key.keysym.sym == SDLK_DOWN && direction != 2)
         {
-            case SDLK_UP: snake[0].y += VELOCITY; break;
-            case SDLK_DOWN: snake[0].y -= VELOCITY; break;
-            case SDLK_LEFT: snake[0].x += VELOCITY; break;
-            case SDLK_RIGHT: snake[0].x -= VELOCITY; break;
+            angle += 180;
+            Mix_PlayChannel(-1,gButton_Click,0);
+            direction = 3;
+        }
+        else if(e.key.keysym.sym == SDLK_LEFT && direction != 1)
+        {
+            angle += 90;
+            Mix_PlayChannel(-1,gButton_Click,0);
+            direction = 0;
+        }
+        else if(e.key.keysym.sym == SDLK_RIGHT && direction != 0)
+        {
+            angle -= 90;
+            Mix_PlayChannel(-1,gButton_Click,0);
+            direction = 1;
         }
     }
 }
 
-void Snake::move()
+void Snake::classic()
 {
-    /*for (int i = 0;i < snake.size();i++){
-		if (i == 0){
-			this->snake[0].x0 = this->snake[0].x;this->snake[0].y0 = this->snake[0].y;
-		}
-		else {
-			this->snake[i].x0 = this->snake[i].x;this->snake[i].y0 = this->snake[i].y;
-			this->snake[i].x = this->snake[i-1].x0;this->snake[i].y = this->snake[i-1].y0;
-		}
-    */
-    this->snake[0].x0 += this->snake[0].x;
-    this->snake[0].y0 += this->snake[0].y;
- 		/*
-		  TO DO: check game ending
-        */
+    prevTail = snake.back();
+    for (size_t i = snake.size()-1; i > 0; i--)
+		snake[i] = snake[i - 1];
+    if (direction == 2)
+            snake[0].y -= step;
+    else if (direction == 3)
+            snake[0].y += step;
+    else if (direction == 0)
+            snake[0].x -= step;
+    else if (direction == 1)
+            snake[0].x += step;
 
+    if((snake[0].x < WALL) || (snake[0].x > SCREEN_WIDTH-200))
+    {
+        snake[0].x = snake[0].x;
+    }
+
+    if((snake[0].y < WALL) || (snake[0].y > SCREEN_HEIGHT - WALL*2))
+    {
+        snake[0].y = snake[0].y;
+    }
+}
+
+void Snake::modern()
+{
+    prevTail = snake.back();
+    for (size_t i = snake.size()-1; i > 0; i--)
+		snake[i] = snake[i - 1];
+    if (direction == 2)
+            snake[0].y -= step;
+    else if (direction == 3)
+            snake[0].y += step;
+    else if (direction == 0)
+            snake[0].x -= step;
+    else if (direction == 1)
+            snake[0].x += step;
+
+    if (snake[0].x < 0)
+    {
+        snake[0].x = SCREEN_WIDTH - 200;
+    }
+    if (snake[0].x > SCREEN_WIDTH - 200)
+    {
+        snake[0].x = 0;
+    }
+    if (snake[0].y < 0)
+    {
+        snake[0].y = SCREEN_HEIGHT - WALL;
+    }
+    if (snake[0].y > SCREEN_HEIGHT - WALL)
+    {
+        snake[0].y = 0;
+    }
+}
+
+
+void Snake::growing()
+{
+   this->snake.push_back(prevTail);
+   score += 20;
+   cout << score << endl;
+}
+
+
+
+bool Snake::isHitWall()
+{
+    Point head = snake[0];
+    return head.x == 0 || head.x == SCREEN_WIDTH - 200 || head.y == 0 || head.y == SCREEN_HEIGHT - 20;
+}
+
+bool Snake::isBiteSelf()
+{
+    Point head = snake[0];
+    for (size_t i = 1; i < snake.size(); i++)
+		if (head.x == snake[i].x && head.y == snake[i].y)
+			return true;
+    return false;
 }
