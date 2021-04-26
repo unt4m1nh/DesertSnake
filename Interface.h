@@ -17,15 +17,14 @@ class Interface
         Interface(SDL_Renderer* &gRenderer);
         ~Interface();
 
-        void renderCurrent(SDL_Renderer* &gRenderer);
+        void renderClasscicGamePlay(SDL_Renderer* &gRenderer);
+        void renderModernGamePlay(SDL_Renderer* &gRenderer);
         void renderGameOver(SDL_Renderer* &gRenderer);
         void renderCredit(SDL_Renderer* &gRenderer);
-        void renderWall(SDL_Renderer* &gRenderer);
-        void renderPlayAgain(SDL_Renderer* &gRenderer);
         bool loadMedia(SDL_Renderer* &gRenderer);
 
         LTexture gBackgroundTexture;
-        string gBackgroundTexturePath = "./images/flatds.jpg";
+        string gBackgroundTexturePath = "./images/background.png";
 
         LTexture gBoardTexture;
         string gBoardTexturePath = "./images/board.png";
@@ -38,12 +37,6 @@ class Interface
 
         LTexture gCreditTexture;
         string gCreditTexturePath = "./images/credit.jpg";
-
-        LTexture gScoreBoardTexture;
-        string gScoreBoardTexturePath = "./images/scoreboard.png";
-
-        LTexture gPlayAgainTexture;
-        string gPlayAgainTexturePath = "./images/playagain.png";
 
 
 

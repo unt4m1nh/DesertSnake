@@ -7,7 +7,6 @@
 #include "TextObject.h"
 #include "BaseObj.h"
 
-
 #include<iostream>
 #include<SDL.h>
 #include<SDL_image.h>
@@ -16,6 +15,7 @@
 #include<stdlib.h>
 #include<ctime>
 #include<string>
+#include<fstream>
 
 
 bool Game::initWindowAndRender() {
@@ -77,6 +77,11 @@ bool Game::initWindowAndRender() {
 				}
                 gFont = TTF_OpenFont("./font/Lato-Bold.ttf",30);
                 if(gFont == NULL)
+                {
+                    success = false;
+                }
+                gModeText_1 = TTF_OpenFont("./font/FFF_Tusj.ttf",60);
+                if( gModeText_1 == NULL )
                 {
                     success = false;
                 }
@@ -165,7 +170,7 @@ bool Game::eatFood()
 
 bool Game::checkCoordinate()
 {
-   for (int i = 0; i < this->snake->snake.size(); i++)
+   for (int i = 0; i < 100; i++)
    {
        if (this->snake->snake[i].x == this->food->food.x && this->snake->snake[i].y == this->food->food.y)
        {
@@ -174,9 +179,6 @@ bool Game::checkCoordinate()
    }
    return false;
 }
-
-
-
 void Game::addFood()
 {
         srand(time(0));
@@ -195,6 +197,11 @@ void Game::addFood()
         this->food->food.x = pos_X[randX];
 	    this->food->food.y = pos_Y[randY];
 }
+/*
+bool Game::checkHighScore(vector<int>& highscore)
+*/
+
+
 
 
 void Game::close() {
@@ -213,8 +220,7 @@ void Game::close() {
 	gRenderer = NULL;
 	gMusic = NULL;
 
-
-	//Quit SDL subsystems
+    //Quit SDL subsystems
 	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
@@ -223,8 +229,6 @@ void Game::close() {
 }
 
 bool Game::run() {
-    //Main loop flag
-    //bool quit_gameLoop = false;
 
     bool quit = false;
 
@@ -232,52 +236,139 @@ bool Game::run() {
 
     bool classic = false;
 
-    bool check = false;
+    bool game_mode = false;
 
     TextObject score;
     score.set_color(TextObject::White_Text);
     int score_val = 0;
 
+    TextObject text1;
+    text1.set_color(TextObject::Red_Text);
+
+    TextObject game_mode1;
+    game_mode1.set_color(TextObject::White_Text);
+
+    TextObject game_mode2;
+    game_mode2.set_color(TextObject::White_Text);
+
+    string score_txt = "Your score";
+    text1.SetText(score_txt);
+    text1.LoadFromRenderText(gFont,gRenderer);
+
+    string mode1 = "Classic";
+    string mode2 = "Modern";
+    game_mode1.SetText(mode1);
+    game_mode1.LoadFromRenderText(gModeText_1,gRenderer);
+    game_mode2.SetText(mode2);
+    game_mode2.LoadFromRenderText(gModeText_1,gRenderer);
+
     //Event handler
     SDL_Event e;
-    play_again:
+    menu:
         this->playMusic(gMusic);
         this->menu->renderCurrent(this->gRenderer);
         SDL_RenderPresent(gRenderer);
     while(!quit)
     {
          //Play the music
-         while( SDL_PollEvent( &e ) != 0 )
+     while( SDL_PollEvent( &e ) != 0 )
+     {
+         bool back = true;
+
+         bool inside = true;
+
+         bool credit = true;
+         if( e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP )
          {
-             if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
+            //Get mouse position
+            int x, y;
+            SDL_GetMouseState( &x, &y );
+
+
+            //Mouse is left of the button
+            if( x < 80 || x > 80 + BUTTON_WIDTH || y < SCREEN_HEIGHT/2 - 100 || y > SCREEN_HEIGHT/2 )
+            {
+                inside = false;
+            }
+            if( x < 80 || x > 80 + BUTTON_WIDTH || y < SCREEN_HEIGHT/2 + 10 || y > SCREEN_HEIGHT/2 + 110)
+            {
+                credit = false;
+            }
+            if (credit)
+            {
+                if (e.type == SDL_MOUSEBUTTONDOWN)
                 {
-                    if(e.key.keysym.sym == SDLK_s)
+                   back = true;
+                   Mix_PlayChannel(-1,gButton_Click,0);
+                   this->interface->renderCredit(this->gRenderer);
+                   SDL_RenderPresent(gRenderer);
+                }
+            }
+            if (inside)
+            {
+                //Set mouse over sprite
+                if (e.type == SDL_MOUSEBUTTONDOWN)
+                {
+                   Mix_PlayChannel(-1,gButton_Click,0);
+                   game_mode = true;
+                }
+            }
+            if (game_mode)
+            {
+                Mix_PauseMusic();
+                game_mode1.RenderText(gRenderer,SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2-100);
+                game_mode2.RenderText(gRenderer,SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2);
+                SDL_RenderPresent(gRenderer);
+
+                bool focus_classic = true;
+                bool focus_modern = true;
+                if( x < SCREEN_WIDTH/2-100 ||  x > SCREEN_WIDTH/2 - 100 + BUTTON_WIDTH || y < SCREEN_HEIGHT/2 - 100 || y > SCREEN_HEIGHT/2 )
+                {
+                    focus_classic = false;
+                }
+                if( x < SCREEN_WIDTH/2-100 ||  x > SCREEN_WIDTH/2 - 100 + BUTTON_WIDTH || y < SCREEN_HEIGHT/2 || y > SCREEN_HEIGHT/2 + BUTTON_HEIGHT )
+                {
+                    focus_modern = false;
+                }
+                if (focus_classic)
+                {
+                   if (e.type == SDL_MOUSEBUTTONDOWN)
+                   {
+                       Mix_PlayChannel(-1,gButton_Click,0);
+                       classic = true;
+                       game_mode = false;
+                   }
+                }
+                if (focus_modern)
+                {
+                   if (e.type == SDL_MOUSEBUTTONDOWN)
+                   {
+                       Mix_PlayChannel(-1,gButton_Click,0);
+                       modern = true;
+                       game_mode = false;
+                   }
+                }
+            }
+        }
+        if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
+        {
+              if (e.key.keysym.sym == SDLK_q)
+              {
+                  quit = true;
+              }
+              if (back)
+              {
+                if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
+                {
+                    if (e.key.keysym.sym == SDLK_b)
                     {
-                        Mix_PlayChannel(-1,gButton_Click,0);
-                        classic = true;
-                        //quit = true;
-                        Mix_PauseMusic();
-                    }
-                    if(e.key.keysym.sym == SDLK_m)
-                    {
-                        Mix_PlayChannel(-1,gButton_Click,0);
-                        //modern = true;
-                        //quit = true;
-                        Mix_PauseMusic();
-                    }
-                    if(e.key.keysym.sym == SDLK_c)
-                    {
-                        Mix_PlayChannel(-1,gButton_Click,0);
-                        this->interface->renderCredit(this->gRenderer);
-                        SDL_RenderPresent(gRenderer);
-                    }
-                    if(e.key.keysym.sym == SDLK_q)
-                    {
-                        quit = true;
+                        credit = false;
+                        goto menu;
                     }
                 }
-         }
-        while (classic == true)
+              }
+        }
+        while (classic)
         {
                 srand(time(0));
                         //Handle events on queue and check when user deciced to quit game
@@ -298,50 +389,49 @@ bool Game::run() {
                 if (this->eatFood())
                 {
                     Mix_PlayChannel(-1,gEat_Effect,0);
-                    this->snake->growing();
-                    score_val += 20;
-                    if (this->checkCoordinate() == true)
+                    if (checkCoordinate() == true)
                     {
                         this->addFood();
                     }
+                    this->snake->growing();
+                    score_val += 20;
                 }
                 if(this->snake->isHitWall() || this->snake->isBiteSelf() == true )
                 {
+                    this->highscore.push_back(score_val);
                     Mix_PlayChannel(-1,gHit_Effect,0);
                     SDL_Delay(1000);
                     this->interface->renderGameOver(this->gRenderer);
                     SDL_Delay(5000);
                     classic = false;
-                    quit = false;
-                    score_val = 0;
-                    goto play_again;
+                    quit = true;
                 }
-                this->interface->renderCurrent(this->gRenderer);
+                this->interface->renderClasscicGamePlay(this->gRenderer);
                 this->food->renderCurrent(this->gRenderer);
                 this->snake->renderSnake(this->gRenderer);
-                this->interface->renderWall(this->gRenderer);
                 string str_score = to_string(score_val);
                 score.SetText(str_score);
                 score.LoadFromRenderText(gFont,gRenderer);
                 if(score_val < 100)
                 {
-                  score.RenderText(gRenderer,700,100);
+                  score.RenderText(gRenderer,700,SCREEN_HEIGHT/2-50);
                 }
                 else if (score_val >= 100 && score_val < 1000)
                 {
-                  score.RenderText(gRenderer,690,100);
+                  score.RenderText(gRenderer,690,SCREEN_HEIGHT/2-50);
                 }
                 else
                 {
-                  score.RenderText(gRenderer,680,100);
+                  score.RenderText(gRenderer,680,SCREEN_HEIGHT/2-50);
                 }
+                text1.RenderText(gRenderer,640,SCREEN_HEIGHT/2-100);
 
                 SDL_RenderPresent(gRenderer);
 
                 SDL_Delay(50);
         }
 
-        if ( modern == true)
+        while (modern)
         {
                 srand(time(0));
                 while( SDL_PollEvent( &e ) != 0 )
@@ -359,23 +449,24 @@ bool Game::run() {
                 if (this->eatFood())
                 {
                     Mix_PlayChannel(-1,gEat_Effect,0);
-                    score_val += 50;
-                    this->snake->growing();
                     if (this->checkCoordinate() == true)
                     {
                         this->addFood();
                     }
+                    score_val += 50;
+                    this->snake->growing();
                 }
                 if (this->snake->isBiteSelf() == true)
                 {
+                    this->highscore.push_back(score_val);
                     Mix_PlayChannel(-1,gHit_Effect,0);
                     SDL_Delay(1000);
                     this->interface->renderGameOver(this->gRenderer);
                     SDL_Delay(5000);
-                   // quit_gameLoop = true;
-
+                    modern = false;
+                    quit = true;
                 }
-                this->interface->renderCurrent(this->gRenderer);
+                this->interface->renderModernGamePlay(this->gRenderer);
                 this->food->renderCurrent(this->gRenderer);
                 this->snake->renderSnake(this->gRenderer);
                 string str_score = to_string(score_val);
@@ -383,25 +474,43 @@ bool Game::run() {
                 score.LoadFromRenderText(gFont,gRenderer);
                 if(score_val < 100)
                 {
-                  score.RenderText(gRenderer,700,100);
+                  score.RenderText(gRenderer,700,SCREEN_HEIGHT/2-50);
                 }
                 else if (score_val >= 100 && score_val < 1000)
                 {
-                  score.RenderText(gRenderer,690,100);
+                  score.RenderText(gRenderer,690,SCREEN_HEIGHT/2-50);
                 }
                 else
                 {
-                  score.RenderText(gRenderer,680,100);
+                  score.RenderText(gRenderer,680,SCREEN_HEIGHT/2-50);
                 }
+                text1.RenderText(gRenderer,640,SCREEN_HEIGHT/2-100);
                 SDL_RenderPresent(gRenderer);
 
                 SDL_Delay(30);
         }
+      }
     }
-
-     // End game and free the memory
     this->close();
+
     return true;
+}
+
+void Game::getHighScore()
+{
+    ofstream myFile ("./highscore/highscore.txt");
+    if (myFile.is_open())
+    {
+        for (int i = 0; i < highscore.size(); i++)
+        {
+           myFile << this->highscore[i] << endl;
+        }
+        myFile.close();
+    }
+    else
+    {
+        cout <<"Unable to open file txt";
+    }
 }
 
 

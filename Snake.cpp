@@ -65,18 +65,18 @@ void Snake::renderSnake(SDL_Renderer* &gRenderer)
     //render original snake
     for (size_t i = 0; i < snake.size(); i++)
     {
-        this->snakeTexture[i].render(gRenderer,snake[i].x,snake[i].y,NULL,angle);
+        this->snakeTexture[i].render(gRenderer,snake[i].x,snake[i].y);
     }
     //redraw it when eating food
     for (size_t i = 1; i <= snake.size(); i++)
     {
         if(i == snake.size())
         {
-             this->snakeTexture[0].render(gRenderer,snake[snake.size()-i].x,snake[snake.size()-i].y,NULL,angle);
+             this->snakeTexture[0].render(gRenderer,snake[snake.size()-i].x,snake[snake.size()-i].y);
         }
         else
         {
-             this->snakeTexture[1].render(gRenderer,snake[snake.size()-i].x,snake[snake.size()-i].y,NULL,angle);
+             this->snakeTexture[1].render(gRenderer,snake[snake.size()-i].x,snake[snake.size()-i].y);
         }
     }
 }
@@ -88,25 +88,21 @@ void Snake::handleEvent(SDL_Event& e, Mix_Chunk* gButton_Click)
      {
         if(e.key.keysym.sym == SDLK_UP && direction != 3)
         {
-            angle += -90;
             Mix_PlayChannel(-1,gButton_Click,0);
             direction = 2;
         }
         else if(e.key.keysym.sym == SDLK_DOWN && direction != 2)
         {
-            angle += 180;
             Mix_PlayChannel(-1,gButton_Click,0);
             direction = 3;
         }
         else if(e.key.keysym.sym == SDLK_LEFT && direction != 1)
         {
-            angle += 90;
             Mix_PlayChannel(-1,gButton_Click,0);
             direction = 0;
         }
         else if(e.key.keysym.sym == SDLK_RIGHT && direction != 0)
         {
-            angle -= 90;
             Mix_PlayChannel(-1,gButton_Click,0);
             direction = 1;
         }
@@ -174,8 +170,6 @@ void Snake::modern()
 void Snake::growing()
 {
    this->snake.push_back(prevTail);
-   score += 20;
-   cout << score << endl;
 }
 
 

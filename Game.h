@@ -26,6 +26,7 @@ class Game{
         void addFood();
         bool checkCoordinate();
         void playMusic(Mix_Music* gMusic);
+        void getHighScore();
 
         // init function
         bool initWindowAndRender();
@@ -39,6 +40,8 @@ class Game{
         Mix_Chunk* gEat_Effect = NULL;
         Mix_Chunk* gHit_Effect = NULL;
         TTF_Font* gFont = NULL;
+        TTF_Font* gModeText_1 = NULL;
+        vector<int> highscore;
 
 
     private:

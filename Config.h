@@ -13,6 +13,9 @@ enum direction
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
+const int BUTTON_WIDTH = 100;
+const int BUTTON_HEIGHT= 80;
+
 const int WALL = 20;
 
 

@@ -17,10 +17,9 @@ Interface::~Interface()
 {
     this->gBackgroundTexture.free();
     this->gBoardTexture.free();
+    this->gWallTexture.free();
     this->gOverTexture.free();
     this->gCreditTexture.free();
-    this->gScoreBoardTexture.free();
-    this->gPlayAgainTexture.free();
 }
 
 bool Interface::loadMedia(SDL_Renderer* &gRenderer)
@@ -56,39 +55,25 @@ bool Interface::loadMedia(SDL_Renderer* &gRenderer)
             success = false;
             printf( "Failed to load credit texture image %d!\n" );
     }
-    this->gScoreBoardTexture.loadFromFile(this->gScoreBoardTexturePath, gRenderer);
-    if (this->gScoreBoardTexture.get_mTexture() == NULL) {
-            success = false;
-            printf( "Failed to load scoreboard texture image %d!\n" );
-    }
-    this->gPlayAgainTexture.loadFromFile(this->gPlayAgainTexturePath, gRenderer);
-    if (this->gPlayAgainTexture.get_mTexture() == NULL) {
-            success = false;
-            printf( "Failed to load play again texture image %d!\n" );
-    }
 }
 
-void Interface::renderCurrent(SDL_Renderer* &gRenderer)
+void Interface::renderClasscicGamePlay(SDL_Renderer* &gRenderer)
 {
-               // SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-				//SDL_RenderClear( gRenderer );
-
-				//Render background texture to screen
-				this->gBackgroundTexture.render(gRenderer,0,0 );
-				this->gBoardTexture.render(gRenderer,0,0);
-				this->gScoreBoardTexture.render(gRenderer,665,50);
-
-				//Update screen
-				SDL_RenderPresent( gRenderer );
-
-				return;
-}
-
-void Interface::renderWall(SDL_Renderer* &gRenderer)
-{
+    this->gBackgroundTexture.render(gRenderer,0,0);
+    this->gBoardTexture.render(gRenderer,0,0);
     this->gWallTexture.render(gRenderer,0,0);
 
-    SDL_RenderPresent(gRenderer);
+    SDL_RenderPresent( gRenderer );
+
+    return;
+}
+
+void Interface::renderModernGamePlay(SDL_Renderer* &gRenderer)
+{
+    this->gBackgroundTexture.render(gRenderer,0,0);
+    this->gBoardTexture.render(gRenderer,0,0);
+
+    SDL_RenderPresent( gRenderer );
 
     return;
 }
@@ -112,13 +97,7 @@ void Interface::renderCredit(SDL_Renderer* &gRenderer)
     return;
 }
 
-void Interface::renderPlayAgain(SDL_Renderer* &gRenderer)
-{
-    this->gPlayAgainTexture.render(gRenderer,0,0);
 
-    SDL_RenderPresent(gRenderer);
 
-    return;
-}
 
 
