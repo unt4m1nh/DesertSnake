@@ -38,7 +38,7 @@ bool Game::initWindowAndRender() {
 		}
 
 		//Create window
-		this->gWindow = SDL_CreateWindow( "DESERT SNAKE C++", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		this->gWindow = SDL_CreateWindow( "SNAKE C++", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( this->gWindow == NULL )
 		{
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -262,10 +262,10 @@ bool Game::run() {
     game_mode2.set_color(TextObject::White_Text);
 
     TextObject quit_slection1;
-    quit_slection1.set_color(TextObject::White_Text);
+    quit_slection1.set_color(TextObject::Black_Text);
 
     TextObject quit_slection2;
-    quit_slection2.set_color(TextObject::White_Text);
+    quit_slection2.set_color(TextObject::Black_Text);
 
     string score_txt = "Your score";
     text1.SetText(score_txt);
@@ -514,7 +514,6 @@ bool Game::run() {
         }
         if (game_over)
         {
-            this->interface->renderBackground(this->gRenderer);
             quit_slection1.RenderText(gRenderer,SCREEN_WIDTH/2-150,SCREEN_HEIGHT/2-100);
             quit_slection2.RenderText(gRenderer,SCREEN_WIDTH/2-150,SCREEN_HEIGHT/2);
             SDL_RenderPresent(gRenderer);
@@ -527,11 +526,11 @@ bool Game::run() {
                     SDL_GetMouseState( &x, &y );
                     bool inside_slection1 = true;
                     bool inside_slection2 = true;
-                    if (x < SCREEN_WIDTH/2 - 200 || x > SCREEN_WIDTH/2 + 200 || y < SCREEN_HEIGHT/2 - 150 || y > SCREEN_HEIGHT/2)
+                    if (x < SCREEN_WIDTH/2 - 200 || x > SCREEN_WIDTH/2 + 200 || y < SCREEN_HEIGHT/2 - 150 || y > SCREEN_HEIGHT/2-50)
                     {
                         inside_slection1 = false;
                     }
-                    if (x < SCREEN_WIDTH/2 - 200 || x > SCREEN_WIDTH/2 + 200 + BUTTON_WIDTH*4 || y < SCREEN_HEIGHT/2  || y > SCREEN_HEIGHT/2 + 150)
+                    if (x < SCREEN_WIDTH/2 - 200 || x > SCREEN_WIDTH/2 + 200 || y < SCREEN_HEIGHT/2 - 50  || y > SCREEN_HEIGHT/2 + 150)
                     {
                         inside_slection2 = false;
                     }
@@ -562,24 +561,7 @@ bool Game::run() {
 
     return true;
 }
-/*
-void Game::getHighScore()
-{
-    ofstream myFile ("./highscore/highscore.txt");
-    if (myFile.is_open())
-    {
-        for (int i = 0; i < highscore.size(); i++)
-        {
-           myFile << this->highscore[i] << endl;
-        }
-        myFile.close();
-    }
-    else
-    {
-        cout <<"Unable to open file txt";
-    }
-}
-*/
+
 
 
 
