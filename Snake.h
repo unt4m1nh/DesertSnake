@@ -35,8 +35,6 @@ public:
    void reDraw(SDL_Renderer* &gRenderer);
    bool loadMedia(SDL_Renderer* &gRenderer);
    int direction = 1;
-   int score = 0;
-   int angle = 0;
    vector<Point> snake = {
                          Point{SCREEN_WIDTH/2, SCREEN_HEIGHT/2},
                          Point{SCREEN_WIDTH/2, SCREEN_HEIGHT/2},

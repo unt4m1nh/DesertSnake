@@ -55,23 +55,22 @@ bool Interface::loadMedia(SDL_Renderer* &gRenderer)
             success = false;
             printf( "Failed to load credit texture image %d!\n" );
     }
+    return success;
 }
 
-void Interface::renderClasscicGamePlay(SDL_Renderer* &gRenderer)
+void Interface::renderInterface(SDL_Renderer* &gRenderer)
 {
     this->gBackgroundTexture.render(gRenderer,0,0);
     this->gBoardTexture.render(gRenderer,0,0);
-    this->gWallTexture.render(gRenderer,0,0);
 
     SDL_RenderPresent( gRenderer );
 
     return;
 }
 
-void Interface::renderModernGamePlay(SDL_Renderer* &gRenderer)
+void Interface::renderWall(SDL_Renderer* &gRenderer)
 {
-    this->gBackgroundTexture.render(gRenderer,0,0);
-    this->gBoardTexture.render(gRenderer,0,0);
+    this->gWallTexture.render(gRenderer,0,0);
 
     SDL_RenderPresent( gRenderer );
 
@@ -91,6 +90,15 @@ void Interface::renderGameOver(SDL_Renderer* &gRenderer)
 void Interface::renderCredit(SDL_Renderer* &gRenderer)
 {
     this->gCreditTexture.render(gRenderer,0,0);
+
+    SDL_RenderPresent( gRenderer);
+
+    return;
+}
+
+void Interface::renderBackground(SDL_Renderer* &gRenderer)
+{
+    this->gBackgroundTexture.render(gRenderer,0,0);
 
     SDL_RenderPresent( gRenderer);
 

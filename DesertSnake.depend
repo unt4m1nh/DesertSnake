@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1619444711 source:c:\users\untaminh\desktop\snakedemo\desertsnake\main.cpp
+1619489585 source:c:\users\untaminh\desktop\snakedemo\desertsnake\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -382,7 +382,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1619445627 c:\users\untaminh\desktop\snakedemo\desertsnake\game.h
+1619485986 c:\users\untaminh\desktop\snakedemo\desertsnake\game.h
 	<SDL.h>
 	<SDL_image.h>
 	<iostream>
@@ -399,7 +399,7 @@
 	<string>
 	"Food.h"
 
-1619447212 source:c:\users\untaminh\desktop\snakedemo\desertsnake\game.cpp
+1619491533 source:c:\users\untaminh\desktop\snakedemo\desertsnake\game.cpp
 	"Game.h"
 	"Config.h"
 	"Interface.h"
@@ -431,7 +431,7 @@
 	<SDL_ttf.h>
 	<string>
 
-1619436263 c:\users\untaminh\desktop\snakedemo\desertsnake\interface.h
+1619490720 c:\users\untaminh\desktop\snakedemo\desertsnake\interface.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -439,7 +439,7 @@
 	"LTexture.h"
 	"Snake.h"
 
-1619436245 source:c:\users\untaminh\desktop\snakedemo\desertsnake\interface.cpp
+1619490730 source:c:\users\untaminh\desktop\snakedemo\desertsnake\interface.cpp
 	"Interface.h"
 	"Config.h"
 	"Game.h"
@@ -456,7 +456,7 @@
 	"Config.h"
 	"Position.h"
 
-1618996712 c:\users\untaminh\desktop\snakedemo\desertsnake\snake.h
+1619485419 c:\users\untaminh\desktop\snakedemo\desertsnake\snake.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>

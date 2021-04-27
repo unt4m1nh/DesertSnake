@@ -27,6 +27,7 @@ class Game{
         bool checkCoordinate();
         void playMusic(Mix_Music* gMusic);
         void getHighScore();
+        void resetGame();
 
         // init function
         bool initWindowAndRender();
@@ -42,6 +43,8 @@ class Game{
         TTF_Font* gFont = NULL;
         TTF_Font* gModeText_1 = NULL;
         vector<int> highscore;
+
+        int score_val = 0;
 
 
     private:

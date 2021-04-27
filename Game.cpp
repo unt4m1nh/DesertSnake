@@ -197,11 +197,20 @@ void Game::addFood()
         this->food->food.x = pos_X[randX];
 	    this->food->food.y = pos_Y[randY];
 }
-/*
-bool Game::checkHighScore(vector<int>& highscore)
-*/
 
 
+void Game::resetGame()
+{
+    this->score_val = 0;
+    this->snake->snake.erase(this->snake->snake.begin()+4,this->snake->snake.end());
+    this->snake->snake[0].x = SCREEN_WIDTH/2;
+    this->snake->snake[0].y = SCREEN_HEIGHT/2;
+    this->food->food.x = 100;
+    this->food->food.y = 100;
+    this->snake->direction = 1;
+
+    return;
+}
 
 
 void Game::close() {
@@ -238,9 +247,10 @@ bool Game::run() {
 
     bool game_mode = false;
 
+    bool game_over = false;
+
     TextObject score;
     score.set_color(TextObject::White_Text);
-    int score_val = 0;
 
     TextObject text1;
     text1.set_color(TextObject::Red_Text);
@@ -250,6 +260,12 @@ bool Game::run() {
 
     TextObject game_mode2;
     game_mode2.set_color(TextObject::White_Text);
+
+    TextObject quit_slection1;
+    quit_slection1.set_color(TextObject::White_Text);
+
+    TextObject quit_slection2;
+    quit_slection2.set_color(TextObject::White_Text);
 
     string score_txt = "Your score";
     text1.SetText(score_txt);
@@ -261,6 +277,13 @@ bool Game::run() {
     game_mode1.LoadFromRenderText(gModeText_1,gRenderer);
     game_mode2.SetText(mode2);
     game_mode2.LoadFromRenderText(gModeText_1,gRenderer);
+
+    string slection1 = "Play Again";
+    string slection2 = "Quit";
+    quit_slection1.SetText(slection1);
+    quit_slection1.LoadFromRenderText(gModeText_1,gRenderer);
+    quit_slection2.SetText(slection2);
+    quit_slection2.LoadFromRenderText(gModeText_1,gRenderer);
 
     //Event handler
     SDL_Event e;
@@ -371,7 +394,6 @@ bool Game::run() {
         while (classic)
         {
                 srand(time(0));
-                        //Handle events on queue and check when user deciced to quit game
                 while( SDL_PollEvent( &e ) != 0 )
                 {
                             //User requests quit
@@ -394,7 +416,7 @@ bool Game::run() {
                         this->addFood();
                     }
                     this->snake->growing();
-                    score_val += 20;
+                    this->score_val += 20;
                 }
                 if(this->snake->isHitWall() || this->snake->isBiteSelf() == true )
                 {
@@ -404,9 +426,10 @@ bool Game::run() {
                     this->interface->renderGameOver(this->gRenderer);
                     SDL_Delay(5000);
                     classic = false;
-                    quit = true;
+                    game_over = true;
                 }
-                this->interface->renderClasscicGamePlay(this->gRenderer);
+                this->interface->renderInterface(this->gRenderer);
+                this->interface->renderWall(this->gRenderer);
                 this->food->renderCurrent(this->gRenderer);
                 this->snake->renderSnake(this->gRenderer);
                 string str_score = to_string(score_val);
@@ -453,7 +476,7 @@ bool Game::run() {
                     {
                         this->addFood();
                     }
-                    score_val += 50;
+                    this->score_val += 50;
                     this->snake->growing();
                 }
                 if (this->snake->isBiteSelf() == true)
@@ -464,9 +487,9 @@ bool Game::run() {
                     this->interface->renderGameOver(this->gRenderer);
                     SDL_Delay(5000);
                     modern = false;
-                    quit = true;
+                    game_over = true;
                 }
-                this->interface->renderModernGamePlay(this->gRenderer);
+                this->interface->renderInterface(this->gRenderer);
                 this->food->renderCurrent(this->gRenderer);
                 this->snake->renderSnake(this->gRenderer);
                 string str_score = to_string(score_val);
@@ -489,13 +512,57 @@ bool Game::run() {
 
                 SDL_Delay(30);
         }
+        if (game_over)
+        {
+            this->interface->renderBackground(this->gRenderer);
+            quit_slection1.RenderText(gRenderer,SCREEN_WIDTH/2-150,SCREEN_HEIGHT/2-100);
+            quit_slection2.RenderText(gRenderer,SCREEN_WIDTH/2-150,SCREEN_HEIGHT/2);
+            SDL_RenderPresent(gRenderer);
+            while( SDL_PollEvent( &e ) != 0 )
+            {
+                if( e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP )
+                {
+                    //Get mouse position
+                    int x, y;
+                    SDL_GetMouseState( &x, &y );
+                    bool inside_slection1 = true;
+                    bool inside_slection2 = true;
+                    if (x < SCREEN_WIDTH/2 - 200 || x > SCREEN_WIDTH/2 + 200 || y < SCREEN_HEIGHT/2 - 150 || y > SCREEN_HEIGHT/2)
+                    {
+                        inside_slection1 = false;
+                    }
+                    if (x < SCREEN_WIDTH/2 - 200 || x > SCREEN_WIDTH/2 + 200 + BUTTON_WIDTH*4 || y < SCREEN_HEIGHT/2  || y > SCREEN_HEIGHT/2 + 150)
+                    {
+                        inside_slection2 = false;
+                    }
+                    if (inside_slection1)
+                    {
+                       if (e.type == SDL_MOUSEBUTTONDOWN)
+                       {
+                           Mix_PlayChannel(-1,gButton_Click,0);
+                           this->resetGame();
+                           game_over = false;
+                           goto menu;
+                       }
+                    }
+                    if (inside_slection2)
+                    {
+                       if (e.type == SDL_MOUSEBUTTONDOWN)
+                       {
+                           Mix_PlayChannel(-1,gButton_Click,0);
+                           quit = true;
+                       }
+                    }
+                }
+            }
+        }
       }
     }
     this->close();
 
     return true;
 }
-
+/*
 void Game::getHighScore()
 {
     ofstream myFile ("./highscore/highscore.txt");
@@ -512,6 +579,7 @@ void Game::getHighScore()
         cout <<"Unable to open file txt";
     }
 }
+*/
 
 
 

@@ -21,7 +21,7 @@ int main(int argc, char* args[]) {
 
     game->run();
 
-    game->getHighScore();
+    //game->getHighScore();
 
     return 0;
 }

@@ -17,10 +17,11 @@ class Interface
         Interface(SDL_Renderer* &gRenderer);
         ~Interface();
 
-        void renderClasscicGamePlay(SDL_Renderer* &gRenderer);
-        void renderModernGamePlay(SDL_Renderer* &gRenderer);
+        void renderInterface(SDL_Renderer* &gRenderer);
+        void renderWall(SDL_Renderer* &gRenderer);
         void renderGameOver(SDL_Renderer* &gRenderer);
         void renderCredit(SDL_Renderer* &gRenderer);
+        void renderBackground(SDL_Renderer* &gRenderer);
         bool loadMedia(SDL_Renderer* &gRenderer);
 
         LTexture gBackgroundTexture;
@@ -37,7 +38,6 @@ class Interface
 
         LTexture gCreditTexture;
         string gCreditTexturePath = "./images/credit.jpg";
-
 
 
 };
