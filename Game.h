@@ -28,6 +28,8 @@ class Game{
         void playMusic(Mix_Music* gMusic);
         void getHighScore();
         void resetGame();
+        int checkHighScore();
+        void setHighScore();
 
         // init function
         bool initWindowAndRender();
@@ -42,9 +44,11 @@ class Game{
         Mix_Chunk* gHit_Effect = NULL;
         TTF_Font* gFont = NULL;
         TTF_Font* gModeText_1 = NULL;
-        vector<int> highscore;
+        TTF_Font* ScoreTexture = NULL;
+
 
         int score_val = 0;
+        int highscore = 0;
 
 
     private:

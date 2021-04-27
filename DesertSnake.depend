@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1619489585 source:c:\users\untaminh\desktop\snakedemo\desertsnake\main.cpp
+1619500626 source:c:\users\untaminh\desktop\snakedemo\desertsnake\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -382,7 +382,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1619485986 c:\users\untaminh\desktop\snakedemo\desertsnake\game.h
+1619501432 c:\users\untaminh\desktop\snakedemo\desertsnake\game.h
 	<SDL.h>
 	<SDL_image.h>
 	<iostream>
@@ -399,7 +399,7 @@
 	<string>
 	"Food.h"
 
-1619497442 source:c:\users\untaminh\desktop\snakedemo\desertsnake\game.cpp
+1619501640 source:c:\users\untaminh\desktop\snakedemo\desertsnake\game.cpp
 	"Game.h"
 	"Config.h"
 	"Interface.h"
@@ -407,7 +407,6 @@
 	"Snake.h"
 	"LTexture.h"
 	"TextObject.h"
-	"BaseObj.h"
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -439,7 +438,7 @@
 	"LTexture.h"
 	"Snake.h"
 
-1619490730 source:c:\users\untaminh\desktop\snakedemo\desertsnake\interface.cpp
+1619497460 source:c:\users\untaminh\desktop\snakedemo\desertsnake\interface.cpp
 	"Interface.h"
 	"Config.h"
 	"Game.h"
@@ -528,10 +527,10 @@
 	"TextObject.h"
 	<iostream>
 
-1619101056 source:c:\users\untaminh\desktop\snakedemo\desertsnake\baseobj.cpp
+1619498796 source:c:\users\untaminh\desktop\snakedemo\desertsnake\baseobj.cpp
 	"BaseObj.h"
 
-1619101164 c:\users\untaminh\desktop\snakedemo\desertsnake\baseobj.h
+1619498794 c:\users\untaminh\desktop\snakedemo\desertsnake\baseobj.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>

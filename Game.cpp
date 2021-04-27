@@ -5,7 +5,7 @@
 #include "Snake.h"
 #include "LTexture.h"
 #include "TextObject.h"
-#include "BaseObj.h"
+
 
 #include<iostream>
 #include<SDL.h>
@@ -82,6 +82,11 @@ bool Game::initWindowAndRender() {
                 }
                 gModeText_1 = TTF_OpenFont("./font/FFF_Tusj.ttf",60);
                 if( gModeText_1 == NULL )
+                {
+                    success = false;
+                }
+                ScoreTexture = TTF_OpenFont("./font/FFF_Tusj.ttf",80);
+                if( ScoreTexture == NULL )
                 {
                     success = false;
                 }
@@ -267,6 +272,12 @@ bool Game::run() {
     TextObject quit_slection2;
     quit_slection2.set_color(TextObject::Black_Text);
 
+    TextObject best_score;
+    best_score.set_color(TextObject::White_Text);
+
+    TextObject int_best_score;
+    int_best_score.set_color(TextObject::White_Text);
+
     string score_txt = "Your score";
     text1.SetText(score_txt);
     text1.LoadFromRenderText(gFont,gRenderer);
@@ -285,6 +296,13 @@ bool Game::run() {
     quit_slection2.SetText(slection2);
     quit_slection2.LoadFromRenderText(gModeText_1,gRenderer);
 
+    string best_text = "BEST SCORE:";
+    best_score.SetText(best_text);
+    best_score.LoadFromRenderText(ScoreTexture,gRenderer);
+    string bestscore = to_string(highscore);
+    int_best_score.SetText(bestscore);
+    int_best_score.LoadFromRenderText(ScoreTexture,gRenderer);
+
     //Event handler
     SDL_Event e;
     menu:
@@ -301,6 +319,8 @@ bool Game::run() {
          bool inside = true;
 
          bool credit = true;
+
+         bool high_score = true;
          if( e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP )
          {
             //Get mouse position
@@ -309,9 +329,13 @@ bool Game::run() {
 
 
             //Mouse is left of the button
-            if( x < 80 || x > 80 + BUTTON_WIDTH || y < SCREEN_HEIGHT/2 - 100 || y > SCREEN_HEIGHT/2 )
+            if( x < 80 || x > 80 + BUTTON_WIDTH || y < SCREEN_HEIGHT/2 - 100 || y > SCREEN_HEIGHT/2 - 50 )
             {
                 inside = false;
+            }
+            if( x < 80 || x > 80 + BUTTON_WIDTH || y < SCREEN_HEIGHT/2 - 50  || y > SCREEN_HEIGHT/2 )
+            {
+                high_score = false;
             }
             if( x < 80 || x > 80 + BUTTON_WIDTH || y < SCREEN_HEIGHT/2 + 10 || y > SCREEN_HEIGHT/2 + 110)
             {
@@ -326,6 +350,19 @@ bool Game::run() {
                    this->interface->renderCredit(this->gRenderer);
                    SDL_RenderPresent(gRenderer);
                 }
+            }
+            if (high_score)
+            {
+                if (e.type == SDL_MOUSEBUTTONDOWN)
+                {
+                   back = true;
+                   Mix_PlayChannel(-1,gButton_Click,0);
+                   this->interface->renderClassicGamePlay(this->gRenderer);
+                   best_score.RenderText(gRenderer,SCREEN_WIDTH/2-400,SCREEN_HEIGHT/2-100);
+                   int_best_score.RenderText(gRenderer,SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2);
+                   SDL_RenderPresent(gRenderer);
+                }
+
             }
             if (inside)
             {
@@ -420,7 +457,6 @@ bool Game::run() {
                 }
                 if(this->snake->isHitWall() || this->snake->isBiteSelf() == true )
                 {
-                    this->highscore.push_back(score_val);
                     Mix_PlayChannel(-1,gHit_Effect,0);
                     SDL_Delay(1000);
                     this->interface->renderGameOver(this->gRenderer);
@@ -480,7 +516,6 @@ bool Game::run() {
                 }
                 if (this->snake->isBiteSelf() == true)
                 {
-                    this->highscore.push_back(score_val);
                     Mix_PlayChannel(-1,gHit_Effect,0);
                     SDL_Delay(1000);
                     this->interface->renderGameOver(this->gRenderer);
@@ -559,6 +594,42 @@ bool Game::run() {
     this->close();
 
     return true;
+}
+
+int Game::checkHighScore()
+{
+   ifstream file("./highscore/highscore.txt");
+   if (file.is_open())
+   {
+       file >> this->highscore;
+       if(score_val > this->highscore)
+       {
+           score_val = this->highscore;
+       }
+   }
+   else
+   {
+       cout <<"Unable to open file text";
+   }
+   file.close();
+
+   return this->highscore;
+}
+
+void Game::setHighScore()
+{
+    ofstream file;
+    file.open("./highscore/highscore.txt");
+    if (file.is_open())
+    {
+        file << this->highscore;
+    }
+    else
+     {
+       cout <<"Unable to open file text";
+   }
+   file.close();
+
 }
 
 
