@@ -399,7 +399,7 @@
 	<string>
 	"Food.h"
 
-1619492351 source:c:\users\untaminh\desktop\snakedemo\desertsnake\game.cpp
+1619497442 source:c:\users\untaminh\desktop\snakedemo\desertsnake\game.cpp
 	"Game.h"
 	"Config.h"
 	"Interface.h"
@@ -431,7 +431,7 @@
 	<SDL_ttf.h>
 	<string>
 
-1619490720 c:\users\untaminh\desktop\snakedemo\desertsnake\interface.h
+1619497442 c:\users\untaminh\desktop\snakedemo\desertsnake\interface.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>

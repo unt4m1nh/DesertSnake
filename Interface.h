@@ -17,8 +17,8 @@ class Interface
         Interface(SDL_Renderer* &gRenderer);
         ~Interface();
 
-        void renderInterface(SDL_Renderer* &gRenderer);
-        void renderWall(SDL_Renderer* &gRenderer);
+        void renderClassicGamePlay(SDL_Renderer* &gRenderer);
+        void renderModernGamePlay(SDL_Renderer* &gRenderer);
         void renderGameOver(SDL_Renderer* &gRenderer);
         void renderCredit(SDL_Renderer* &gRenderer);
         void renderBackground(SDL_Renderer* &gRenderer);

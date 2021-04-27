@@ -428,8 +428,7 @@ bool Game::run() {
                     classic = false;
                     game_over = true;
                 }
-                this->interface->renderInterface(this->gRenderer);
-                this->interface->renderWall(this->gRenderer);
+                this->interface->renderClassicGamePlay(this->gRenderer);
                 this->food->renderCurrent(this->gRenderer);
                 this->snake->renderSnake(this->gRenderer);
                 string str_score = to_string(score_val);
@@ -489,7 +488,7 @@ bool Game::run() {
                     modern = false;
                     game_over = true;
                 }
-                this->interface->renderInterface(this->gRenderer);
+                this->interface->renderModernGamePlay(this->gRenderer);
                 this->food->renderCurrent(this->gRenderer);
                 this->snake->renderSnake(this->gRenderer);
                 string str_score = to_string(score_val);

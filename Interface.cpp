@@ -58,19 +58,21 @@ bool Interface::loadMedia(SDL_Renderer* &gRenderer)
     return success;
 }
 
-void Interface::renderInterface(SDL_Renderer* &gRenderer)
+void Interface::renderClassicGamePlay(SDL_Renderer* &gRenderer)
 {
     this->gBackgroundTexture.render(gRenderer,0,0);
     this->gBoardTexture.render(gRenderer,0,0);
+    this->gWallTexture.render(gRenderer,0,0);
 
     SDL_RenderPresent( gRenderer );
 
     return;
 }
 
-void Interface::renderWall(SDL_Renderer* &gRenderer)
+void Interface::renderModernGamePlay(SDL_Renderer* &gRenderer)
 {
-    this->gWallTexture.render(gRenderer,0,0);
+    this->gBackgroundTexture.render(gRenderer,0,0);
+    this->gBoardTexture.render(gRenderer,0,0);
 
     SDL_RenderPresent( gRenderer );
 
