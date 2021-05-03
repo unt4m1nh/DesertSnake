@@ -21,9 +21,6 @@ int main(int argc, char* args[]) {
 
     game->run();
 
-    game->checkHighScore();
-
-    game->setHighScore();
 
     return 0;
 }

@@ -15,8 +15,7 @@ Interface::Interface(SDL_Renderer* &gRenderer)
 
 Interface::~Interface()
 {
-    this->gBackgroundTexture.free();
-    this->gBoardTexture.free();
+    this->PlaygroundTexture.free();
     this->gWallTexture.free();
     this->gOverTexture.free();
     this->gCreditTexture.free();
@@ -28,18 +27,11 @@ bool Interface::loadMedia(SDL_Renderer* &gRenderer)
     bool success = true;
 
     //Load Background texture
-    this->gBackgroundTexture.loadFromFile(this->gBackgroundTexturePath, gRenderer);
-    if (this->gBackgroundTexture.get_mTexture() == NULL) {
+    this->PlaygroundTexture.loadFromFile(this->PlaygroundTexturePath, gRenderer);
+    if (this->PlaygroundTexture.get_mTexture() == NULL) {
             success = false;
-            printf( "Failed to load background texture image %d!\n" );
+            printf( "Failed to load playgorund texture image %d!\n" );
     }
-
-    this->gBoardTexture.loadFromFile(this->gBoardTexturePath, gRenderer);
-    if (this->gBoardTexture.get_mTexture() == NULL) {
-            success = false;
-            printf( "Failed to load board texture image %d!\n" );
-    }
-
     this->gWallTexture.loadFromFile(this->gWallTexturePath, gRenderer);
     if (this->gWallTexture.get_mTexture() == NULL) {
             success = false;
@@ -58,30 +50,26 @@ bool Interface::loadMedia(SDL_Renderer* &gRenderer)
     return success;
 }
 
-void Interface::renderClassicGamePlay(SDL_Renderer* &gRenderer)
+void Interface::renderPlayGround(SDL_Renderer* &gRenderer)
 {
-    this->gBackgroundTexture.render(gRenderer,0,0);
-    this->gBoardTexture.render(gRenderer,0,0);
-    this->gWallTexture.render(gRenderer,0,0);
+    this->PlaygroundTexture.render(gRenderer,0,0);
 
-    SDL_RenderPresent( gRenderer );
+    SDL_RenderPresent( gRenderer);
 
     return;
 }
 
-void Interface::renderModernGamePlay(SDL_Renderer* &gRenderer)
+void Interface::renderWall(SDL_Renderer* &gRenderer)
 {
-    this->gBackgroundTexture.render(gRenderer,0,0);
-    this->gBoardTexture.render(gRenderer,0,0);
+    this->gWallTexture.render(gRenderer,0,0);
 
-    SDL_RenderPresent( gRenderer );
+    SDL_RenderPresent( gRenderer);
 
     return;
 }
 
 void Interface::renderGameOver(SDL_Renderer* &gRenderer)
 {
-    //SDL_RenderClear( gRenderer);
     this->gOverTexture.render(gRenderer,100, 40 );
 
     SDL_RenderPresent( gRenderer );
@@ -98,14 +86,7 @@ void Interface::renderCredit(SDL_Renderer* &gRenderer)
     return;
 }
 
-void Interface::renderBackground(SDL_Renderer* &gRenderer)
-{
-    this->gBackgroundTexture.render(gRenderer,0,0);
 
-    SDL_RenderPresent( gRenderer);
-
-    return;
-}
 
 
 

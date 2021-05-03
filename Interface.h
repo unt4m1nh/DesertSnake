@@ -17,18 +17,14 @@ class Interface
         Interface(SDL_Renderer* &gRenderer);
         ~Interface();
 
-        void renderClassicGamePlay(SDL_Renderer* &gRenderer);
-        void renderModernGamePlay(SDL_Renderer* &gRenderer);
+        void renderPlayGround(SDL_Renderer* &gRenderer);
+        void renderWall(SDL_Renderer* &gRenderer);
         void renderGameOver(SDL_Renderer* &gRenderer);
         void renderCredit(SDL_Renderer* &gRenderer);
-        void renderBackground(SDL_Renderer* &gRenderer);
         bool loadMedia(SDL_Renderer* &gRenderer);
 
-        LTexture gBackgroundTexture;
-        string gBackgroundTexturePath = "./images/background.png";
-
-        LTexture gBoardTexture;
-        string gBoardTexturePath = "./images/board.png";
+        LTexture PlaygroundTexture;
+        string PlaygroundTexturePath = "./images/playground.png";
 
         LTexture gWallTexture;
         string gWallTexturePath = "./images/wall.png";

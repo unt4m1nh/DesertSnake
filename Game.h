@@ -27,9 +27,13 @@ class Game{
         bool checkCoordinate();
         void playMusic(Mix_Music* gMusic);
         void getHighScore();
-        void resetGame();
-        int checkHighScore();
-        void setHighScore();
+        void resetClassic();
+        void resetModern();
+        int checkClassicHighScore();
+        int checkModernHighScore();
+        void setClassicHighScore(int highscore);
+        void setModernHighScore(int highscore);
+
 
         // init function
         bool initWindowAndRender();
@@ -42,13 +46,14 @@ class Game{
         Mix_Chunk* gButton_Click = NULL;
         Mix_Chunk* gEat_Effect = NULL;
         Mix_Chunk* gHit_Effect = NULL;
-        TTF_Font* gFont = NULL;
-        TTF_Font* gModeText_1 = NULL;
-        TTF_Font* ScoreTexture = NULL;
+        TTF_Font* TextTexture1 = NULL;
+        TTF_Font* TextTexture2 = NULL;
+        TTF_Font* TextTexture3 = NULL;
 
 
-        int score_val = 0;
-        int highscore = 0;
+        int classic_score_val = 0;
+        int modern_score_val = 0;
+        int highscore;
 
 
     private:

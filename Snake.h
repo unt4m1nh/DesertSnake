@@ -35,6 +35,7 @@ public:
    void reDraw(SDL_Renderer* &gRenderer);
    bool loadMedia(SDL_Renderer* &gRenderer);
    int direction = 1;
+   double angle = 0;
    vector<Point> snake = {
                          Point{SCREEN_WIDTH/2, SCREEN_HEIGHT/2},
                          Point{SCREEN_WIDTH/2, SCREEN_HEIGHT/2},
@@ -43,8 +44,8 @@ public:
                       };
    Point prevTail;
    LTexture snakeTexture[100];
-   string snakeTexturePath[2]={"./images/head.png",
-                               "./images/body.png"};
+   string snakeTexturePath[2]={"./images/head1.png",
+                               "./images/body1.png"};
 
 
 

@@ -61,6 +61,8 @@
 		<Unit filename="Snake.h" />
 		<Unit filename="TextObject.cpp" />
 		<Unit filename="TextObject.h" />
+		<Unit filename="highscore/classic_highscore.txt" />
+		<Unit filename="highscore/modern_highscore.txt" />
 		<Unit filename="main.cpp" />
 		<Extensions />
 	</Project>
