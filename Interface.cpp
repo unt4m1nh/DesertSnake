@@ -26,7 +26,6 @@ bool Interface::loadMedia(SDL_Renderer* &gRenderer)
     //Loading success flag
     bool success = true;
 
-    //Load Background texture
     this->PlaygroundTexture.loadFromFile(this->PlaygroundTexturePath, gRenderer);
     if (this->PlaygroundTexture.get_mTexture() == NULL) {
             success = false;
@@ -49,6 +48,8 @@ bool Interface::loadMedia(SDL_Renderer* &gRenderer)
     }
     return success;
 }
+
+//Rendering related textures
 
 void Interface::renderPlayGround(SDL_Renderer* &gRenderer)
 {

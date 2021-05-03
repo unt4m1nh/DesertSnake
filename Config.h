@@ -1,6 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+//Save global variables
+
 enum direction
 {
     up = 2,

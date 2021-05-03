@@ -81,7 +81,7 @@ void Snake::renderSnake(SDL_Renderer* &gRenderer)
     }
 }
 
-
+//handle event of snake
 void Snake::handleEvent(SDL_Event& e, Mix_Chunk* gButton_Click)
 {
     if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
@@ -113,6 +113,7 @@ void Snake::handleEvent(SDL_Event& e, Mix_Chunk* gButton_Click)
     }
 }
 
+//game logic of classic mode
 void Snake::classic()
 {
     prevTail = snake.back();
@@ -138,6 +139,7 @@ void Snake::classic()
     }
 }
 
+//game logic of modern mode
 void Snake::modern()
 {
     prevTail = snake.back();
@@ -170,6 +172,7 @@ void Snake::modern()
     }
 }
 
+//adding Point to vector
 
 void Snake::growing()
 {
@@ -177,13 +180,14 @@ void Snake::growing()
 }
 
 
-
+// check if snake hits wall
 bool Snake::isHitWall()
 {
     Point head = snake[0];
     return head.x == 0 || head.x == SCREEN_WIDTH - 200 || head.y == 0 || head.y == SCREEN_HEIGHT - 20;
 }
 
+//check if snake bites itself
 bool Snake::isBiteSelf()
 {
     Point head = snake[0];

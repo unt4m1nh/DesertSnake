@@ -177,6 +177,7 @@ bool Game::eatFood()
 
 bool Game::checkCoordinate()
 {
+   // check if food position is inside the snake's body
    for (int i = 0; i < this->snake->snake.size(); i++)
    {
        if (this->snake->snake[i].x == this->food->food.x && this->snake->snake[i].y == this->food->food.y)
@@ -188,6 +189,7 @@ bool Game::checkCoordinate()
 }
 void Game::addFood()
 {
+        // randomize food's position
         srand(time(0));
         vector <int> pos_X;
         vector <int> pos_Y;
@@ -208,10 +210,12 @@ void Game::addFood()
 
 void Game::resetClassic()
 {
+    // check if player score is higher than high score or not, then put write it into file
     if (classic_score_val > this->checkClassicHighScore())
     {
         this->setClassicHighScore(classic_score_val);
     }
+      // reset socre and put the snake back to its original position and direction
     this->classic_score_val = 0;
     this->snake->snake.erase(this->snake->snake.begin()+4,this->snake->snake.end());
     this->snake->snake[0].x = SCREEN_WIDTH/2;
@@ -224,10 +228,12 @@ void Game::resetClassic()
 
 void Game::resetModern()
 {
+    // check if player score is higher than high score or not, then put write it into file
     if (modern_score_val > this->checkModernHighScore())
     {
         this->setModernHighScore(modern_score_val);
     }
+    // reset socre and put the snake back to its original position and direction
     this->modern_score_val = 0;
     this->snake->snake.erase(this->snake->snake.begin()+4,this->snake->snake.end());
     this->snake->snake[0].x = SCREEN_WIDTH/2;
@@ -391,6 +397,7 @@ bool Game::run() {
                 {
                     credit = false;
                 }
+                //render credit
                 if (credit)
                 {
                     if (e.type == SDL_MOUSEBUTTONDOWN)
@@ -401,6 +408,7 @@ bool Game::run() {
                        SDL_RenderPresent(gRenderer);
                     }
                 }
+                //render highscore
                 if (high_score)
                 {
                     if (e.type == SDL_MOUSEBUTTONDOWN)
@@ -425,6 +433,7 @@ bool Game::run() {
                        game_mode = true;
                     }
                 }
+                //render game mode selection
                 if (game_mode)
                 {
                     Mix_PauseMusic();
@@ -480,6 +489,7 @@ bool Game::run() {
                     }
                   }
             }
+            // classic game play
             while (classic)
             {
                     srand(time(0));
@@ -542,7 +552,7 @@ bool Game::run() {
 
                     SDL_Delay(50);
         }
-
+        // modern game play
         while (modern)
         {
                 srand(time(0));
@@ -570,17 +580,6 @@ bool Game::run() {
                     }
                     while (this->checkCoordinate()==false);
                 }
-                /*
-                if (this->snake->isBiteSelf() == false)
-                {
-                    Mix_PlayChannel(-1,gHit_Effect,0);
-                    SDL_Delay(1000);
-                    //this->interface->renderGameOver(this->gRenderer);
-                    SDL_Delay(5000);
-                    modern = false;
-                    game_over = true;
-                }
-                */
                 if( this->snake->isBiteSelf() == true )
                     {
                         Mix_PlayChannel(-1,gHit_Effect,0);
@@ -613,6 +612,7 @@ bool Game::run() {
 
                 SDL_Delay(50);
         }
+        //render game over
         if (game_over)
         {
             quit_slection1.RenderText(gRenderer,SCREEN_WIDTH/2-150,SCREEN_HEIGHT/2-100);
@@ -620,6 +620,7 @@ bool Game::run() {
             SDL_RenderPresent(gRenderer);
             while( SDL_PollEvent( &e ) != 0 )
             {
+                // ask player to play again or quit
                 if( e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP )
                 {
                     //Get mouse position
@@ -666,6 +667,7 @@ bool Game::run() {
     return true;
 }
 
+//write and read high score file
 int Game::checkClassicHighScore()
 {
    ifstream file("./highscore/classic_highscore.txt");
