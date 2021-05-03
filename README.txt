@@ -8,7 +8,7 @@ Luồng hoạt động: class Game có 2 hàm chính là init (hiển thị đ�
 Menu:
 - Start: Lựa chọn chế độ chơi
 
-- Highscore
+- Highscore: Hiển thị điểm số cao nhất từng đạt được ở cả 2 chế độ classic và modern
 
 - Credit: Thông tin về game
 

@@ -556,28 +556,40 @@ bool Game::run() {
                     this->snake->handleEvent(e,gButton_Click);
 
                 }
+
                 this->snake->modern();
 
                 if (this->eatFood())
                 {
                     Mix_PlayChannel(-1,gEat_Effect,0);
+                    this->snake->growing();
                     modern_score_val+=50;
                     do
                     {
                         this->addFood();
                     }
                     while (this->checkCoordinate()==false);
-                    this->snake->growing();
                 }
+                /*
                 if (this->snake->isBiteSelf() == false)
                 {
                     Mix_PlayChannel(-1,gHit_Effect,0);
                     SDL_Delay(1000);
-                    this->interface->renderGameOver(this->gRenderer);
+                    //this->interface->renderGameOver(this->gRenderer);
                     SDL_Delay(5000);
                     modern = false;
                     game_over = true;
                 }
+                */
+                if( this->snake->isBiteSelf() == true )
+                    {
+                        Mix_PlayChannel(-1,gHit_Effect,0);
+                        SDL_Delay(1000);
+                        this->interface->renderGameOver(this->gRenderer);
+                        SDL_Delay(5000);
+                        modern = false;
+                        game_over = true;
+                    }
                 this->interface->renderPlayGround(this->gRenderer);
                 this->food->renderCurrent(this->gRenderer);
                 this->snake->renderSnake(this->gRenderer);
