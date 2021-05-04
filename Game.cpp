@@ -223,6 +223,7 @@ void Game::resetClassic()
     this->food->food.x = 100;
     this->food->food.y = 100;
     this->snake->direction = 1;
+    this->snake->angle = 0;
     return;
 }
 
@@ -241,6 +242,7 @@ void Game::resetModern()
     this->food->food.x = 100;
     this->food->food.y = 100;
     this->snake->direction = 1;
+    this->snake->angle = 0;
     return;
 }
 
